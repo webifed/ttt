@@ -1,0 +1,9 @@
+.board {
+}
+.board-row {
+  display: flex;
+}
+.square {
+  width: 70px;
+  height: 70px;
+}
