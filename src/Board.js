@@ -8,13 +8,10 @@ function Square({value, onSquareClick}) {
 }
 
 export default function Board() {
-  //const [squares, setSquares] = useState([Array(9).fill(null)]);
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [moveNumber, setMoveNumber] = useState(0);
   const winner = calculateWinner(squares);
-  //const currentSquares = squares[squares.length - 1];
-  //const currentSquares = squares[moveNumber];
   let status;
   let player = "";
   player = moveNumber % 2 === 0 ? "X" : "Y";
