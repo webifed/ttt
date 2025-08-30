@@ -12,11 +12,10 @@ export default function Board() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [moveNumber, setMoveNumber] = useState(0);
   const winner = calculateWinner(squares);
+
   let status;
   let player = "";
   player = moveNumber % 2 === 0 ? "X" : "Y";
-
-  console.log(history);
 
   if (winner) {
     status = `GAME OVER! ${winner} wins!`; 
@@ -47,6 +46,9 @@ export default function Board() {
     setMoveNumber(prevMoveNumber => i);
   }
 
+  const moves = [...history];
+  moves.pop();
+
   return(
     <>
     <div>{status}</div>
@@ -68,9 +70,14 @@ export default function Board() {
       </div>
     </div>
     <ul className="history">
-      { history.map((val, key) => 
-      <li key={key}><button onClick={ () => backTo(key) }>{ key === 0 ? 'Back to start' : `Back to move ${key}`}</button></li>
-      ) }
+      {
+      moves.map((val, key) => 
+      <li key={key}><button onClick={ () => backTo(key) }>{ key === 0 ? 'Back to start' : `Back to move #${key}`}</button></li>
+      ) 
+      }
+      { !winner &&
+      <li>{`Yuo're on move #${moves.length + 1}`}</li>
+      }
     </ul>
     </>
   )
