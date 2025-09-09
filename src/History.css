@@ -1,0 +1,29 @@
+.history {
+  margin: 20px 0 0;
+  padding: 0;
+}
+.history__item {
+  list-style-type: none;
+  margin-top: 5px;
+}
+.history__item--current {
+  font-weight: 600;
+}
+.history__item button {
+  background-color: darkblue;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 25px 10px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+}
+.history__item button svg {
+  width: 40px;
+  height: 40px;
+}
+.history__item button svg path {
+  fill: #fff;
+}

@@ -1,13 +1,14 @@
-.board {
+.ttt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 50px 0;
+}
+.ttt__heading {
+
 }
 .board-row {
   display: flex;
-}
-.square {
-  width: 70px;
-  height: 70px;
-  font-size: 32px;
-}
-.red {
-  color: red;
 }

@@ -1,0 +1,13 @@
+.status {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+.status__next {
+  color: #000;
+}
+.status__win {
+  color: #cd3232;
+}
+.status__draw {
+  color: green;
+}

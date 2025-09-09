@@ -1,45 +1,18 @@
 import { useState } from 'react';
+import Status from './Status';
+import Square from './Square';
+import History from './History';
 import './Board.css';
-
-function Square({value, onSquareClick, colored}) {
-  const win = calculateWinner(colored);
-  let squareClass = "square";
-
-  if (win) {
-    const winningLine = win.winningLine;
-
-    if (winningLine.includes(index)) {
-      squareClass += ' red';
-    }
-  }
-
-  return (
-    <button className={squareClass} onClick={onSquareClick}>{value}</button>
-  )
-}
 
 export default function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [moveNumber, setMoveNumber] = useState(0);
   const winner = calculateWinner(squares);
-
-  let status;
-  let player = "";
-  player = moveNumber % 2 === 0 ? "X" : "Y";
-
-  if (winner) {
-    status = `GAME OVER! ${winner.symbol} wins!`; 
-  } else if (!winner && moveNumber === 9) {
-    status = `It's DRAW!`;
-  }
-  else {
-    status = `Next player: ${player}`;
-  }
+  let player = moveNumber % 2 === 0 ? "X" : "Y";
 
   const handleSquareClick = (i) => {
     let newSquares = [...squares];
-    let player = "";
 
     if (newSquares[i] || calculateWinner(squares)) {
       return;
@@ -47,55 +20,41 @@ export default function Board() {
 
     setMoveNumber( moveNumber + 1);
 
-    player = moveNumber % 2 === 0 ? "X" : "Y";
     newSquares[i] = player;
     
     setSquares(newSquares);
     setHistory([...history, newSquares]);
   }
 
-  const backTo = (i) => {
+  const handleBackTo = (i) => {
     setSquares(history[i]);
     setHistory(history.slice(0, i+1));
     setMoveNumber(i);
   }
 
-  const moves = [...history];
-  moves.pop();
-
   return(
-    <>
-    <div>{status}</div>
-    <div className="board">
-      <div className="board-row">
-        <Square value={squares[0]} onSquareClick={()=>handleSquareClick(0)} colored={squares} />
-        <Square value={squares[1]} onSquareClick={()=>handleSquareClick(1)} colored={squares} />
-        <Square value={squares[2]} onSquareClick={()=>handleSquareClick(2)} colored={squares} />
+    <div className="ttt">
+      <h1 className='ttt__heading'>Tic Tac Toe</h1>
+      <Status winner={winner} move={moveNumber} nextPlayer={player} />
+      <div className="board">
+        <div className="board-row">
+          <Square value={squares[0]} onSquareClick={()=>handleSquareClick(0)} isWinning={winner && winner.winningLine.includes(0)} />
+          <Square value={squares[1]} onSquareClick={()=>handleSquareClick(1)} isWinning={winner && winner.winningLine.includes(1)} />
+          <Square value={squares[2]} onSquareClick={()=>handleSquareClick(2)} isWinning={winner && winner.winningLine.includes(2)} />
+        </div>
+        <div className="board-row">
+          <Square value={squares[3]} onSquareClick={()=>handleSquareClick(3)} isWinning={winner && winner.winningLine.includes(3)} />
+          <Square value={squares[4]} onSquareClick={()=>handleSquareClick(4)} isWinning={winner && winner.winningLine.includes(4)} />
+          <Square value={squares[5]} onSquareClick={()=>handleSquareClick(5)} isWinning={winner && winner.winningLine.includes(5)} />
+        </div>
+        <div className="board-row">
+          <Square value={squares[6]} onSquareClick={()=>handleSquareClick(6)} isWinning={winner && winner.winningLine.includes(6)} />
+          <Square value={squares[7]} onSquareClick={()=>handleSquareClick(7)} isWinning={winner && winner.winningLine.includes(7)} />
+          <Square value={squares[8]} onSquareClick={()=>handleSquareClick(8)} isWinning={winner && winner.winningLine.includes(8)} />
+        </div>
       </div>
-      <div className="board-row">
-        <Square value={squares[3]} onSquareClick={()=>handleSquareClick(3)} colored={squares} />
-        <Square value={squares[4]} onSquareClick={()=>handleSquareClick(4)} colored={squares} />
-        <Square value={squares[5]} onSquareClick={()=>handleSquareClick(5)} colored={squares} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[6]} onSquareClick={()=>handleSquareClick(6)} colored={squares} />
-        <Square value={squares[7]} onSquareClick={()=>handleSquareClick(7)} colored={squares} />
-        <Square value={squares[8]} onSquareClick={()=>handleSquareClick(8)} colored={squares} />
-      </div>
+      <History history={history} winner={winner} backTo={handleBackTo}/>
     </div>
-    <ul className="history">
-      {
-      moves.map((val, key) => {
-
-        // console.log(moveNumber);
-        return <li key={key}><button onClick={() => backTo(key) }>{ key === 0 ? 'Back to start' : `Back to move #${key}`}</button></li>
-      })
-      }
-      { !winner &&
-      <li>{`Yuo're on move #${moves.length + 1}`}</li>
-      }
-    </ul>
-    </>
   )
 }
 
